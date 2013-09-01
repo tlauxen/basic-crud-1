@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+    
+    <!-- Basic Template -->
+    <definition name="basic" template="/WEB-INF/templates/layout.jsp">
+        <put-attribute name="title" value="Basic CRUD" type="string" />
+        <put-attribute name="css" value="common.css" type="string" />
+    </definition>
+    
+    <!-- Templates -->
+	<definition name="index" extends="basic">
+    </definition>
+ 
+    <!-- País -->
+	<definition name="pais.listagem" extends="basic">
+        <put-attribute name="title" value="Basic CRUD - Listagem de Países" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/pais/listagem.jsp" />
+		<put-attribute name="js" value="pais/pais.js" />
+    </definition>
+ 
+	<definition name="pais.cadastro" extends="basic">
+        <put-attribute name="title" value="Basic CRUD - Cadastro de Países" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/pais/cadastro.jsp" />
+		<put-attribute name="js" value="pais/pais.js" />
+    </definition>
+ 
+</tiles-definitions>
