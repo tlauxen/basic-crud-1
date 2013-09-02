@@ -1,7 +1,8 @@
 var Behavior = {
 		
+	//Initial things
 	init: function(viewModel) {
-	    // Client-side routes    
+	    // Client-side routes
 	    Sammy(function() {
 	        this.get('#:id', function() {
 	    		Behavior.load(this.params.id, viewModel);
@@ -9,19 +10,33 @@ var Behavior = {
 
 	    }).run();
 	},
-		
+	
+	//NAVIGATION things
+	
+	//GOTO Create entity
 	novo: function() {
 		var path = Behavior.substringPath();
-		path += "/cadastro";
+		path += Constants.CREATE_EDIT_PATH;
 		window.location.href = path;
 	},
 	
+	//GOTO edit entity
 	edit: function(o) {
 		var path = Behavior.substringPath();
-		path += "/cadastro/#"+o.id;
+		path += Constants.CREATE_EDIT_PATH+"/#"+o.id;
+		window.location.href = path;
+	},
+
+	//GOTO Go back to the list
+	cancel: function() {
+		var path = Behavior.substringPath();
+		path += Constants.LIST_PATH;
 		window.location.href = path;
 	},
 	
+	//AJAX things
+	
+	//AJAX load an entity by the ID
 	load: function(id, viewModel) {
 		var path = Behavior.substringPath();
 		Behavior.blockForm();
@@ -35,7 +50,7 @@ var Behavior = {
             	viewModel.model(result);
             },
             error: function( jqXHR, textStatus, errorThrown) {
-            	toastr.error("Ocorreu um problema ao carregar o registro: " + textStatus + " - " + errorThrown);
+            	toastr.error(Constants.ERROR_WHEN_LOADING_ENTITY + textStatus + " - " + errorThrown);
             },
             complete: function() {
             	Behavior.unBlockForm();
@@ -44,12 +59,7 @@ var Behavior = {
 
 	},
 	
-	cancel: function() {
-		var path = Behavior.substringPath();
-		path += "/listagem";
-		window.location.href = path;
-	},
-	
+	//AJAX save an entity
 	save: function(viewModel) {
 
 		var path = Behavior.substringPath();
@@ -63,10 +73,10 @@ var Behavior = {
             type: "post",
             success: function(result) {
             	viewModel.model(result);
-            	toastr.success("Registro salvo com sucesso!");
+            	toastr.success(Constants.SUCCESS_SAVING_ENTITY);
             },
             error: function( jqXHR, textStatus, errorThrown) {
-            	toastr.error("Ocorreu um problema ao salvar o registro: " + textStatus + " - " + errorThrown);
+            	toastr.error(Constants.ERROR_WHEN_SAVING_ENTITY + textStatus + " - " + errorThrown);
             },
             complete: function() {
             	Behavior.unBlockForm();
@@ -74,6 +84,7 @@ var Behavior = {
         });
 	},
 	
+	//AJAX remove an entity
 	remove: function(viewModel, o) {
 
 		var path = Behavior.substringPath();
@@ -85,11 +96,11 @@ var Behavior = {
             data: json,
             type: "post",
             success: function() {
-            	viewModel.list([]);
-            	toastr.success("Registro removido com sucesso!");
+            	toastr.success(Constants.SUCCESS_REMOVING_ENTITY);
+            	Behavior.find(viewModel);
             },
             error: function( jqXHR, textStatus, errorThrown) {
-            	toastr.error("Ocorreu um problema ao remover o registro: " + textStatus + " - " + errorThrown);
+            	toastr.error(Constants.SUCCESS_REMOVING_ENTITY + textStatus + " - " + errorThrown);
             },
             complete: function() {
             	Behavior.unBlockForm();
@@ -97,6 +108,7 @@ var Behavior = {
         });
 	},
 	
+	//AJAX find by filter and reload list
 	find: function(viewModel) {
 
 		var path = Behavior.substringPath();
@@ -112,7 +124,7 @@ var Behavior = {
             	viewModel.list(result);
             },
             error: function( jqXHR, textStatus, errorThrown) {
-            	toastr.error("Ocorreu um problema ao executar a consulta: " + textStatus + " - " + errorThrown);
+            	toastr.error(Constants.ERROR_WHEN_QUERYING + textStatus + " - " + errorThrown);
             },
             complete: function() {
             	Behavior.unBlockForm();
@@ -120,20 +132,24 @@ var Behavior = {
         });
 	},
 	
+	//COMMON functions
+	
+	//Retrive initial path from url
 	substringPath: function() {
 		var path = window.location.href;
-		if (path.lastIndexOf("/cadastro") > -1) {
-			path = path.substring(0, path.lastIndexOf("/cadastro"));
-		} else if (path.lastIndexOf("/listagem") > -1) {
-			path = path.substring(0, path.lastIndexOf("/listagem"));
+		if (path.lastIndexOf(Constants.CREATE_EDIT_PATH) > -1) {
+			path = path.substring(0, path.lastIndexOf(Constants.CREATE_EDIT_PATH));
+		} else if (path.lastIndexOf(Constants.LIST_PATH) > -1) {
+			path = path.substring(0, path.lastIndexOf(Constants.LIST_PATH));
 		} else {
 			path = path.substring(0, path.lastIndexOf("/"));
 		}
 		return path;
 	},
 	
+	//Block form
 	blockForm: function() {
-		$('form').block({ message: '<img alt="Processando..." src="/img/ajax-loader.gif"></img>',
+		$('form').block({ message: '<img alt="'+Constants.WORKING+'..." src="'+Constants.LOADER_IMG+'"></img>',
 			css: { 
 	            border: 'none', 
 	            padding: '15px', 
@@ -146,6 +162,7 @@ var Behavior = {
 		});
 	},
 	
+	//Unblock form
 	unBlockForm: function() {
 		$('form').unblock();
 	}

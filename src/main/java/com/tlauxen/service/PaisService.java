@@ -9,7 +9,7 @@ import com.tlauxen.dao.PaisDao;
 import com.tlauxen.model.Pais;
 
 @Service
-public class PaisService {
+public class PaisService implements CrudService<Pais> {
 
 	@Autowired
 	private PaisDao paisDao;
