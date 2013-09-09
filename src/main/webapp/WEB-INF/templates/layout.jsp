@@ -41,6 +41,7 @@
 	<script src="${pageContext.request.contextPath}/js/toastr.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/constants.js"></script>
 	<script src="${pageContext.request.contextPath}/js/common.js"></script>
+	<script src="${pageContext.request.contextPath}/js/model.js"></script>
 	<c:set var="x"><tiles:getAsString name="js" ignore="true" /></c:set>
 	<c:if test="${not empty x}">
 		<script src="${pageContext.request.contextPath}/js/<tiles:getAsString name="js" ignore="true" />"></script>

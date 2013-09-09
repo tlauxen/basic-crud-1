@@ -147,9 +147,16 @@ var Behavior = {
 		return path;
 	},
 	
+	//Retrive initial path from url
+	getContextPath: function() {
+		var path = Behavior.substringPath();
+		path = path.substring(0, path.lastIndexOf("/"));
+		return path;
+	},
+	
 	//Block form
 	blockForm: function() {
-		$('form').block({ message: '<img alt="'+Constants.WORKING+'..." src="'+Constants.LOADER_IMG+'"></img>',
+		$('form').block({ message: '<img alt="'+Constants.WORKING+'..." src="'+Behavior.getContextPath()+Constants.LOADER_IMG+'"></img>',
 			css: { 
 	            border: 'none', 
 	            padding: '15px', 

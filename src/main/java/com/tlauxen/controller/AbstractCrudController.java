@@ -18,7 +18,13 @@ public abstract class AbstractCrudController<T extends Entity> {
     @RequestMapping(headers ={"Accept=application/json"}, value="/ajax/findById",method=RequestMethod.GET)
     public @ResponseBody T findById(@RequestParam Long id) {
     	
-    	return getCrudService().findById(id);
+    	T entity = getCrudService().findById(id);
+    	
+    	if (entity == null) {
+    		throw new RuntimeException(String.format("Entity not found with id %d", id));
+    	}
+    	
+		return entity;
     	
     }
     

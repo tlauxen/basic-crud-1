@@ -16,7 +16,7 @@ public class PaisService implements CrudService<Pais> {
 	
 	public Pais saveOrUpdate(Pais pais) {
 		if (pais.getId() == null) {
-			return paisDao.save(pais);
+			return paisDao.create(pais);
 		} else {
 			return paisDao.update(pais);
 		}

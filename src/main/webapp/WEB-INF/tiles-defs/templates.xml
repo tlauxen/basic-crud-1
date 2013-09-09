@@ -15,7 +15,7 @@
 	<definition name="index" extends="basic">
     </definition>
  
-    <!-- País -->
+    <!-- Pais -->
 	<definition name="pais.listagem" extends="basic">
         <put-attribute name="title" value="Basic CRUD - Listagem de Países" type="string" />
 		<put-attribute name="body" value="/WEB-INF/jsp/pais/listagem.jsp" />
@@ -26,6 +26,19 @@
         <put-attribute name="title" value="Basic CRUD - Cadastro de Países" type="string" />
 		<put-attribute name="body" value="/WEB-INF/jsp/pais/cadastro.jsp" />
 		<put-attribute name="js" value="pais/pais.js" />
+    </definition>
+ 
+    <!-- Estado -->
+	<definition name="estado.listagem" extends="basic">
+        <put-attribute name="title" value="Basic CRUD - Listagem de Estados" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/estado/listagem.jsp" />
+		<put-attribute name="js" value="estado/estado.js" />
+    </definition>
+ 
+	<definition name="estado.cadastro" extends="basic">
+        <put-attribute name="title" value="Basic CRUD - Cadastro de Estados" type="string" />
+		<put-attribute name="body" value="/WEB-INF/jsp/estado/cadastro.jsp" />
+		<put-attribute name="js" value="estado/estado.js" />
     </definition>
  
 </tiles-definitions>

@@ -204,6 +204,11 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
+				<configuration>
+					<webApp>
+						<contextPath>/other</contextPath>
+					</webApp>
+				</configuration>
 			</plugin>
 
 			<plugin>
