@@ -10,8 +10,9 @@ function EstadoViewModel() {
 	var self = this;
 
 	//DATA
-    //Model: entity being created or edited 
-    self.model = ko.observable(new Estado({id: null, pais: new Pais({id: null, sigla: null, nome: null}), sigla: null, nome: null}));
+    this.model = ko.observable(new Estado({id: null, pais: new Pais({id: null, sigla: null, nome: null}), sigla: null, nome: null}));
+
+    this.pais = ko.observable(new Pais({id: null, sigla: null, nome: null}));
     
     //List of entitys
     self.list = ko.observableArray([]);
@@ -19,6 +20,7 @@ function EstadoViewModel() {
     self.filter = ko.observable(new Estado({id: null, pais: new Pais({id: null, sigla: null, nome: null}), sigla: null, nome: null}));
     //Pais list (combo)
     self.paises = ko.observableArray([]);
+    
     
     //AJAX
     
@@ -34,6 +36,26 @@ function EstadoViewModel() {
     	Behavior.find(o);
     };
     
+    self.loadModel = function(o) {
+    	var estado = new Estado(o);
+    	self.model(estado);
+    	$.each(self.paises(), 
+    		function() {
+    			if (this.id == estado.pais.id) {
+    				self.pais(this);
+    				return false;
+    			}
+    		}
+    	);
+    };
+    
+    self.toJSON = function() {
+		var estado = new Estado(self.model());
+		estado.pais = new Pais(self.pais());
+		var json = ko.toJSON(estado);
+		return json;
+    };
+
     //BEHAVIOR
     
     self.cancel = function() {
@@ -47,7 +69,7 @@ function EstadoViewModel() {
     self.edit = function(o) {
     	Behavior.edit(o);
     };
-
+    
 	//AJAX find by filter and reload list
     self.findPaises = function(viewModel) {
 
@@ -62,7 +84,6 @@ function EstadoViewModel() {
             type: "post",
             success: function(result) {
             	viewModel.paises(result);
-            	viewModel.paises.unshift(new Pais({id: null, sigla: null, nome: "Selecione..."}));
             },
             error: function( jqXHR, textStatus, errorThrown) {
             	toastr.error(Constants.ERROR_WHEN_QUERYING + textStatus + " - " + errorThrown);

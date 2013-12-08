@@ -32,6 +32,16 @@ function PaisViewModel() {
     	Behavior.find(o);
     };
     
+    self.loadModel = function(o) {
+    	self.model(new Pais(o));
+    };
+    
+    self.toJSON = function() {
+		var pais = new Pais(self.model());
+		var json = ko.toJSON(pais);
+		return json;
+    };
+
     //BEHAVIOR
     
     self.cancel = function() {

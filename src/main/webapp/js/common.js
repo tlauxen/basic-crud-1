@@ -47,7 +47,7 @@ var Behavior = {
             data: {id: id},
             type: "get",
             success: function(result) {
-            	viewModel.model(result);
+            	viewModel.loadModel(result);
             },
             error: function( jqXHR, textStatus, errorThrown) {
             	toastr.error(Constants.ERROR_WHEN_LOADING_ENTITY + textStatus + " - " + errorThrown);
@@ -65,14 +65,14 @@ var Behavior = {
 		var path = Behavior.substringPath();
 		Behavior.blockForm();
 		path += "/ajax/save";
-		var json = ko.toJSON(viewModel.model);
+		var json = viewModel.toJSON();
 		$.ajax(path, {
         	dataType: 'json',
             contentType: "application/json",
             data: json,
             type: "post",
             success: function(result) {
-            	viewModel.model(result);
+            	viewModel.loadModel(result);
             	toastr.success(Constants.SUCCESS_SAVING_ENTITY);
             },
             error: function( jqXHR, textStatus, errorThrown) {

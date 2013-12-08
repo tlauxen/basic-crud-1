@@ -28,7 +28,7 @@
 					<div class="control-group">
 						<label class="control-label" for="nome">País</label>
 						<div class="controls">
-							<select data-bind="options: $root.paises, value: model().pais, optionsText: 'nome'"></select>
+							<select data-bind="options: paises, optionsText: 'nome', value: pais, optionsCaption: 'Selecione...'"></select>
 						</div>
 					</div>
 					
